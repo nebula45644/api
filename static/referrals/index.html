@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Referral Code Redirect</title>
+</head>
+<body>
+<script>
+let referralCode;
+
+do {
+    referralCode = prompt('Please enter your referral code:');
+} while (!referralCode);
+
+const baseUrl = '/referrals/';
+const referralUrl = `${baseUrl}${referralCode}`;
+if (isValidReferralCode(referralCode)) {
+    window.location.href = referralUrl;
+} else {
+    alert('Invalid referral code. Please try again.');
+    window.location.href = /referrals/
+}
+
+function isValidReferralCode(code) {
+    // Add logic to validate the referral code
+    // For example, check if the code meets certain criteria
+    // This is a placeholder function
+    const validReferralCodes = ['G743', 'H589', 'Q426', 'V109'];
+    return validReferralCodes.includes(code);
+}
+</script>
+</body>
+</html>

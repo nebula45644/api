@@ -51,16 +51,23 @@ if (config.routes !== false) {
   })
 }
 
-if (config.local !== false) {
-  app.get('/e/*', (req, res, next) => {
-    const baseUrls = [
-      'https://raw.githubusercontent.com/v-5x/x/fixy',
-      'https://raw.githubusercontent.com/ypxa/y/main',
-      'https://raw.githubusercontent.com/ypxa/w/master',
-    ]
-    fetchData(req, res, next, baseUrls)
-  })
-}
+app.get('/edu/*', cors({ origin: false }), async (req, res, next) => {
+  try {
+    const reqTarget = `https://raw.githubusercontent.com/Skydiver-Web/Skydiver-Web/main/${req.params[0]}`;
+    const asset = await fetch(reqTarget);
+    
+    if (asset.ok) {
+      const data = await asset.arrayBuffer();
+      res.end(Buffer.from(data));
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.error('Error fetching:', error);
+    next(error);
+  }
+});
+
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {

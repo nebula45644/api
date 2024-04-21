@@ -1,13 +1,16 @@
-import express from 'express';
-import http from 'node:http';
 import createBareServer from "@tomphttp/bare-server-node";
-import path from 'node:path';
-import cors from 'cors';
 import { fileURLToPath } from "url";
 import { createServer as createHttpsServer } from "node:https";
 import { createServer as createHttpServer } from "node:http";
 import { readFileSync, existsSync } from "node:fs";
 import serveStatic from "serve-static";
+import express from 'express'
+import basicAuth from 'express-basic-auth'
+import http from 'node:http'
+import { createBareServer } from '@tomphttp/bare-server-node'
+import path from 'node:path'
+import cors from 'cors'
+import config from './config.js'
 
 const __dirname = process.cwd();
 const server = http.createServer();
@@ -19,6 +22,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'static')));
+
+if (config.challenge) {
+  console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
+  console.log('Passwords are: ' + Object.values(config.users))
+
+  app.use(
+    basicAuth({
+      users: config.users,
+      challenge: true,
+    })
+  )
+}
 
 const routes = [
   { path: '/', file: 'index.html' },

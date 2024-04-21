@@ -14,7 +14,7 @@ import config from './config.js'
 const __dirname = process.cwd()
 const server = http.createServer()
 const app = express(server)
-const bareServer = createBareServer('/o/')
+const bareServer = createBareServer('/bare/')
 const PORT = process.env.PORT || 8080
 
 if (config.challenge) {
@@ -36,14 +36,13 @@ app.use(express.static(path.join(__dirname, 'static')))
 
 if (config.routes !== false) {
   const routes = [
-    { path: '/ap', file: 'apps.html' },
-    { path: '/g', file: 'games.html' },
-    { path: '/s', file: 'settings.html' },
-    { path: '/t', file: 'tabs.html' },
-    { path: '/p', file: 'go.html' },
     { path: '/', file: 'index.html' },
-    { path: '/tos', file: 'tos.html' },
-  ]
+    { path: '/home', file: 'index.html' },
+    { path: '/games', file: 'games.html' },
+    { path: '/games/roblox', file: 'games.html' },
+    { path: '/ai', file: 'ai.html' },
+    { path: '/play/roblox-corporation/5349/roblox', file: 'games.html' },
+  ];
 
   routes.forEach((route) => {
     app.get(route.path, (req, res) => {

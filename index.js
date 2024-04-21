@@ -6,16 +6,11 @@ import path from 'node:path'
 import cors from 'cors'
 import config from './config.js'
 
-const __dirname = process.cwd();
-const server = http.createServer();
-const app = express(server);
-const bareServer = createBareServer('/bare/');
-const PORT = 8080;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static(path.join(__dirname, 'static')));
+const __dirname = process.cwd()
+const server = http.createServer()
+const app = express(server)
+const bareServer = createBareServer('/o/')
+const PORT = process.env.PORT || 8080
 
 if (config.challenge) {
   console.log('Password protection is enabled. Usernames are: ' + Object.keys(config.users))
@@ -29,37 +24,39 @@ if (config.challenge) {
   )
 }
 
-const routes = [
-  { path: '/', file: 'index.html' },
-  { path: '/home', file: 'index.html' },
-  { path: '/games', file: 'games.html' },
-  { path: '/games/roblox', file: 'games.html' },
-  { path: '/ai', file: 'ai.html' },
-  { path: '/play/roblox-corporation/5349/roblox', file: 'games.html' },
-];
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+app.use(express.static(path.join(__dirname, 'static')))
 
-app.get('/edu/*', cors({ origin: false }), async (req, res, next) => {
-  try {
-    const reqTarget = `https://raw.githubusercontent.com/Skydiver-Web/Skydiver-Web/main/${req.params[0]}`;
-    const asset = await fetch(reqTarget);
-    
-    if (asset.ok) {
-      const data = await asset.arrayBuffer();
-      res.end(Buffer.from(data));
-    } else {
-      next();
-    }
-  } catch (error) {
-    console.error('Error fetching:', error);
-    next(error);
-  }
-});
+if (config.routes !== false) {
+  const routes = [
+    { path: '/ap', file: 'apps.html' },
+    { path: '/g', file: 'games.html' },
+    { path: '/s', file: 'settings.html' },
+    { path: '/t', file: 'tabs.html' },
+    { path: '/p', file: 'go.html' },
+    { path: '/', file: 'index.html' },
+    { path: '/tos', file: 'tos.html' },
+  ]
 
-routes.forEach((route) => {
-  app.get(route.path, (req, res) => {
-    res.sendFile(path.join(__dirname, 'static', route.file));
-  });
-});
+  routes.forEach((route) => {
+    app.get(route.path, (req, res) => {
+      res.sendFile(path.join(__dirname, 'static', route.file))
+    })
+  })
+}
+
+if (config.local !== false) {
+  app.get('/e/*', (req, res, next) => {
+    const baseUrls = [
+      'https://raw.githubusercontent.com/v-5x/x/fixy',
+      'https://raw.githubusercontent.com/ypxa/y/main',
+      'https://raw.githubusercontent.com/ypxa/w/master',
+    ]
+    fetchData(req, res, next, baseUrls)
+  })
+}
 
 const fetchData = async (req, res, next, baseUrls) => {
   try {

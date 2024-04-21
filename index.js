@@ -42,8 +42,9 @@ if (config.routes !== false) {
     { path: '/games/roblox', file: 'games.html' },
     { path: '/ai', file: 'ai.html' },
     { path: '/play/roblox-corporation/5349/roblox', file: 'games.html' },
-    { path: '/lol', file: 'lol/index.html' },
-    { path: '/referrals', file: 'referrals/index.html' },
+    { path: '/lol', file: '/lol/index.html' },
+    { path: '/referrals', file: '/referrals/index.html' },
+    { path: '/ref', file: '/referrals/index.html' },
   ];
 
   routes.forEach((route) => {

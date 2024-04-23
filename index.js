@@ -38,6 +38,7 @@ if (config.routes !== false) {
   const routes = [
     { path: '/', file: 'index.html' },
     { path: '/home', file: 'index.html' },
+    { path: '/gyat', file: 'index.html' },
     { path: '/games', file: 'games.html' },
     { path: '/games/roblox', file: 'games.html' },
     { path: '/ai', file: 'ai.html' },

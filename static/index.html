@@ -35,8 +35,12 @@
   <script src="/shortcuts.js"></script>
   <script src="/rewriteURL.js"></script>
   <script>
-    if (window.location.pathname !== "/gyat") {
-            window.location.href = "/gyat";
+     if (window.location.hostname === 'jittyhasabig.bomboclat.shop') {
+         if (window.location.pathname !== "/gyat") {
+                 window.location.href = "/gyat";
+        } else {
+	    script.src = '/aboutblank3.js'
+	    window.location.href = "/home"; 
     }
   </script>
 

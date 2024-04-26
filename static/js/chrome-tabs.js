@@ -33,7 +33,7 @@
   var tabC = 1;
     const defaultTabProperties = {
       title: "New Tab",
-    favicon: true,
+    favicon: false,
   };
 
   let instanceId = 0;
@@ -326,20 +326,16 @@
         tabProperties.title;
 
       const faviconEl = tabEl.querySelector(".chrome-tab-favicon");
-
       if (tabProperties.favicon) {
-      const faviconUrl = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
-      fetch(faviconUrl)
-      .then(response => response.blob())
-      .then(blob => {
-         const favicon = URL.createObjectURL(blob);
-         tabProperties.favicon = favicon;
-         faviconEl.style.backgroundImage = `url('${favicon}')`;
-          }); 
+        faviconEl.style.backgroundImage = `url('${tabProperties.favicon}')`;
+        faviconEl.removeAttribute("hidden", "");
       } else {
         faviconEl.setAttribute("hidden", "");
         faviconEl.removeAttribute("style");
-      } 
+      }
+
+      if (tabProperties.url) {
+      }
 
       if (tabProperties.id) {
         tabEl.setAttribute("data-tab-id", tabProperties.id);

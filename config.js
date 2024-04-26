@@ -8,6 +8,7 @@ const config = {
     construct: 'loose',
     rmb: 'rmb217',
     wib: 'm800' ,
+    corry: 'skibidi' ,
   },
   routes: true, // Change this to false if you just want to host a bare server.
   local: true, // Change this to false to disable local assets.

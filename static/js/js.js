@@ -73,22 +73,28 @@ async function getIcon(id) {
 	let urlIco = CONTENT_WINDOW(id).document.querySelector(
 		'link[rel="favicon"], link[rel="shortcut icon"], link[rel="icon"]'
 	);
-		  if (urlIco!== null) {
-		    if (urlIco.href.includes('data:image/png;base64')) return urlIco.href;
+	if (urlIco !== null) {
+		if (urlIco.href.includes('data:image/png;base64')) return urlIco.href;
 		
-		    const res = await bare.fetch(urlIco.href);
-		    const obj = URL.createObjectURL([await res.blob()], {
-		      type: res.headers.get('content-type') || 'image/x-icon',
-		    });
-		
-		    setTimeout(() => URL.revokeObjectURL(obj), 1e3);
-		
-		    return obj;
-		  } else {
-		    // Set favicon to Google's favicon service
-		    return `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
-		  }
-		}
+		const obj = URL.createObjectURL(new Image());
+		obj.href = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
+
+		setTimeout(() => URL.revokeObjectURL(obj), 1e3);
+
+		return obj;
+	} else {
+		const res = await bare.fetch(
+			new URL('/nonexistent.ico', CONTENT_WINDOW(id).location)
+		);
+		const obj = URL.createObjectURL([await res.blob()], {
+			type: res.headers.get('content-type') || 'image/x-icon',
+		});
+
+		setTimeout(() => URL.revokeObjectURL(obj), 1e3);
+
+		return obj;
+	}
+}
 // Sets tab information
 async function setInfo(frameId) {
 	//if the site we are on is not proxied.

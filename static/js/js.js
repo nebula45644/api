@@ -70,13 +70,16 @@ function getForward(id) {
 }
 // get's bookmark URL
 async function getIcon(id) {
-	let urlIco = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
-	return URL.createObjectURL(new URL(urlIco));
+	let urlIco = CONTENT_WINDOW(id).document.querySelector(
+		'link[rel="favicon"], link[rel="shortcut icon"], link[rel="icon"]'
+	);
 	if (urlIco !== null) {
 		if (urlIco.href.includes('data:image/png;base64')) return urlIco.href;
-		
-		const obj = URL.createObjectURL(new Image());
-		obj.href = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
+
+		const res = await bare.fetch(urlIco.href);
+		const obj = URL.createObjectURL([await res.blob()], {
+			type: res.headers.get('content-type') || 'image/x-icon',
+		});
 
 		setTimeout(() => URL.revokeObjectURL(obj), 1e3);
 

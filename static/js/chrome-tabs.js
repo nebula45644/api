@@ -326,7 +326,7 @@
         tabProperties.title;
 
       const faviconEl = tabEl.querySelector(".chrome-tab-favicon");
-        faviconEl.style.backgroundImage = `url('${tabProperties.favicon}')`;
+        faviconEl.style.backgroundImage = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
         faviconEl.removeAttribute("hidden", "");
 
       if (tabProperties.url) {

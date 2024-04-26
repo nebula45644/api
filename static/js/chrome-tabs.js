@@ -32,8 +32,8 @@
 
   var tabC = 1;
   const defaultTabProperties = {
-    title: "New Hypertab",
-    favicon: false,
+    title: "New Tab",
+    favicon: true,
   };
 
   let instanceId = 0;

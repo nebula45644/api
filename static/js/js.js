@@ -70,9 +70,8 @@ function getForward(id) {
 }
 // get's bookmark URL
 async function getIcon(id) {
-	let urlIco = CONTENT_WINDOW(id).document.querySelector(
-		'link[rel="favicon"], link[rel="shortcut icon"], link[rel="icon"]'
-	);
+	let urlIco = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
+	return URL.createObjectURL(new URL(urlIco));
 	if (urlIco !== null) {
 		if (urlIco.href.includes('data:image/png;base64')) return urlIco.href;
 		

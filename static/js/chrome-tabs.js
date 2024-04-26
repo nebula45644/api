@@ -33,7 +33,7 @@
   var tabC = 1;
     const defaultTabProperties = {
       title: "New Tab",
-    favicon: false,
+    favicon: true,
   };
 
   let instanceId = 0;

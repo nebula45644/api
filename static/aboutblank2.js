@@ -9,14 +9,14 @@ try {
 if (!inFrame && !navigator.userAgent.includes('Firefox')) {
   const popup = open('about:blank', '_blank')
   if (!popup || popup.closed) {
-    alert('Click the symbol next to the bookmark star and select "Always Allow Popups And Redirects" and hit save to hide the site from your history.')
+    alert('Enable popups and redirects to prevent the site from getting blocked.')
   } else {
     const doc = popup.document
     const iframe = doc.createElement('iframe')
     const style = iframe.style
     const link = doc.createElement('link')
 
-    const name = localStorage.getItem('name') || 'Home View Summary | Home Access Center'
+    const name = localStorage.getItem('name') || 'Home View Summary | Grades'
     const icon = localStorage.getItem('icon') || ''
 
     doc.title = name

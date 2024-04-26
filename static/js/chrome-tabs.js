@@ -31,8 +31,8 @@
   };
 
   var tabC = 1;
-    const defaultTabProperties = {
-      title: "New Tab",
+  const defaultTabProperties = {
+    title: "New Hypertab",
     favicon: false,
   };
 
@@ -326,8 +326,13 @@
         tabProperties.title;
 
       const faviconEl = tabEl.querySelector(".chrome-tab-favicon");
-        faviconEl.style.backgroundImage = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
+      if (tabProperties.favicon) {
+        faviconEl.style.backgroundImage = `url('${tabProperties.favicon}')`;
         faviconEl.removeAttribute("hidden", "");
+      } else {
+        faviconEl.setAttribute("hidden", "");
+        faviconEl.removeAttribute("style");
+      }
 
       if (tabProperties.url) {
       }

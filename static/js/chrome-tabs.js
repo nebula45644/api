@@ -33,7 +33,7 @@
   var tabC = 1;
     const defaultTabProperties = {
       title: "New Tab",
-    favicon: false,
+    favicon: true,
   };
 
   let instanceId = 0;
@@ -335,6 +335,15 @@
       }
 
       if (tabProperties.url) {
+        // Get favicon from URL
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${tabProperties.url}`;
+        fetch(faviconUrl)
+         .then(response => response.blob())
+         .then(blob => {
+            const favicon = URL.createObjectURL(blob);
+            tabProperties.favicon = favicon;
+            faviconEl.style.backgroundImage = `url('${favicon}')`;
+          });
       }
 
       if (tabProperties.id) {

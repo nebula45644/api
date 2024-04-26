@@ -326,15 +326,9 @@
         tabProperties.title;
 
       const faviconEl = tabEl.querySelector(".chrome-tab-favicon");
+
       if (tabProperties.favicon) {
-        faviconEl.style.backgroundImage = `url('${tabProperties.favicon}')`;
-        faviconEl.removeAttribute("hidden", "");
-      } else {
-        faviconEl.setAttribute("hidden", "");
-        faviconEl.removeAttribute("style");
-      }
-      tabProperties.url = URL_BAR.value;
-      const faviconUrl = `https://www.google.com/s2/favicons?domain=${tabProperties.url}`;
+      const faviconUrl = `https://www.google.com/s2/favicons?domain=${URL_BAR.value}`;
       fetch(faviconUrl)
       .then(response => response.blob())
       .then(blob => {
@@ -342,6 +336,10 @@
          tabProperties.favicon = favicon;
          faviconEl.style.backgroundImage = `url('${favicon}')`;
           }); 
+      } else {
+        faviconEl.setAttribute("hidden", "");
+        faviconEl.removeAttribute("style");
+      } 
 
       if (tabProperties.id) {
         tabEl.setAttribute("data-tab-id", tabProperties.id);
